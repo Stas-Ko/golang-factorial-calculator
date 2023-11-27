@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strconv"
 	"sync"
 
 	"github.com/julienschmidt/httprouter"
@@ -18,6 +17,7 @@ type InputData struct {
 type Result struct {
 	AFactorial string `json:"a_factorial"`
 	BFactorial string `json:"b_factorial"`
+	BFactorialValue int `json:"b_factorial_value"` // Добавлено новое поле
 }
 
 func calculateFactorial(n int) int {
@@ -61,6 +61,7 @@ func calculateHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Param
 	result := Result{
 		AFactorial: fmt.Sprintf("%d!", inputData.A),
 		BFactorial: fmt.Sprintf("%d!", inputData.B),
+		BFactorialValue: bFactorial, // Используем bFactorial в ответе
 	}
 
 	response, err := json.Marshal(result)
