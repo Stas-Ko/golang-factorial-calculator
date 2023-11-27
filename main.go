@@ -42,14 +42,9 @@ func calculateHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Param
 	}
 
 	var wg sync.WaitGroup
-	wg.Add(2)
+	wg.Add(1)
 
-	var aFactorial, bFactorial int
-
-	go func() {
-		defer wg.Done()
-		aFactorial = calculateFactorial(inputData.A)
-	}()
+	var bFactorial int
 
 	go func() {
 		defer wg.Done()
@@ -61,7 +56,7 @@ func calculateHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Param
 	result := Result{
 		AFactorial:      fmt.Sprintf("%d!", inputData.A),
 		BFactorial:      fmt.Sprintf("%d!", inputData.B),
-		BFactorialValue: bFactorial, // Используем bFactorial в ответе
+		BFactorialValue: bFactorial,
 	}
 
 	response, err := json.Marshal(result)
