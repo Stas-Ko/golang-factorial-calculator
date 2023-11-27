@@ -15,9 +15,9 @@ type InputData struct {
 }
 
 type Result struct {
-	AFactorial string `json:"a_factorial"`
-	BFactorial string `json:"b_factorial"`
-	BFactorialValue int `json:"b_factorial_value"` // Добавлено новое поле
+	AFactorial      string `json:"a_factorial"`
+	BFactorial      string `json:"b_factorial"`
+	BFactorialValue int    `json:"b_factorial_value"`
 }
 
 func calculateFactorial(n int) int {
@@ -59,8 +59,8 @@ func calculateHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Param
 	wg.Wait()
 
 	result := Result{
-		AFactorial: fmt.Sprintf("%d!", inputData.A),
-		BFactorial: fmt.Sprintf("%d!", inputData.B),
+		AFactorial:      fmt.Sprintf("%d!", inputData.A),
+		BFactorial:      fmt.Sprintf("%d!", inputData.B),
 		BFactorialValue: bFactorial, // Используем bFactorial в ответе
 	}
 
