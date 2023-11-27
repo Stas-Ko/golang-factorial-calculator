@@ -17,6 +17,7 @@ type InputData struct {
 type Result struct {
 	AFactorial      string `json:"a_factorial"`
 	BFactorial      string `json:"b_factorial"`
+	AFactorialValue int    `json:"a_factorial_value"`
 	BFactorialValue int    `json:"b_factorial_value"`
 }
 
@@ -42,9 +43,14 @@ func calculateHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Param
 	}
 
 	var wg sync.WaitGroup
-	wg.Add(1)
+	wg.Add(2)
 
-	var bFactorial int
+	var aFactorial, bFactorial int
+
+	go func() {
+		defer wg.Done()
+		aFactorial = calculateFactorial(inputData.A)
+	}()
 
 	go func() {
 		defer wg.Done()
@@ -56,6 +62,7 @@ func calculateHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Param
 	result := Result{
 		AFactorial:      fmt.Sprintf("%d!", inputData.A),
 		BFactorial:      fmt.Sprintf("%d!", inputData.B),
+		AFactorialValue: aFactorial,
 		BFactorialValue: bFactorial,
 	}
 
