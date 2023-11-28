@@ -2,22 +2,33 @@ package http
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"sync"
+
+	"github.com/julienschmidt/httprouter"
 )
 
-// Handler handles HTTP requests.
-type Handler struct {
-	// Add any dependencies or services here
+type InputData struct {
+	A int `json:"a"`
+	B int `json:"b"`
 }
 
-// NewHandler creates a new instance of Handler.
-func NewHandler() *Handler {
-	return &Handler{}
+type Result struct {
+	AFactorial      string `json:"a_factorial"`
+	BFactorial      string `json:"b_factorial"`
+	AFactorialValue int    `json:"a_factorial_value"`
+	BFactorialValue int    `json:"b_factorial_value"`
 }
 
-// CalculateHandler handles the /calculate endpoint.
-func (h *Handler) CalculateHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+func calculateFactorial(n int) int {
+	if n == 0 || n == 1 {
+		return 1
+	}
+	return n * calculateFactorial(n-1)
+}
+
+func CalculateHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	decoder := json.NewDecoder(r.Body)
 	var inputData InputData
 	err := decoder.Decode(&inputData)
