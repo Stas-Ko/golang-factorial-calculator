@@ -6,12 +6,13 @@ import (
 	"sync"
 
 	"github.com/julienschmidt/httprouter"
+	"github.com/Stas-Ko/golang-factorial-calculator/pkg/calculate"
 )
 
 // NewRouter создает новый роутер.
 func NewRouter() *httprouter.Router {
 	router := httprouter.New()
-	router.POST("/calculate", Middleware(CalculateHandler))
+	router.POST("/calculate", Middleware(calculate.CalculateHandler))
 	return router
 }
 
