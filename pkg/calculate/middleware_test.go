@@ -1,12 +1,7 @@
 package calculate
 
-import (
-    "net/http"
-    "net/http/httptest"
-    "testing"
-)
+import "testing"
 
 func TestMiddleware(t *testing.T) {
-    // ... ваш тест для Middleware
+	// Ваши тесты для Middleware
 }
-
