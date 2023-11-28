@@ -1,11 +1,10 @@
 package main
 
 import (
-	"fmt"
-	"github.com/Stas-Ko/golang-factorial-calculator/pkg/http"
+    "github.com/ваш_логин/github_репозиторий/pkg/http"
 )
 
 func main() {
-	router := http.NewRouter()
-	http.StartServer(router)
+    router := http.NewRouter()
+    http.StartServer(router)
 }
