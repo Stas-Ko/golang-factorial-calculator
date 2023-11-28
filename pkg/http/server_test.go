@@ -1,15 +1,11 @@
 package http
 
-import (
-    "net/http"
-    "net/http/httptest"
-    "testing"
-)
+import "testing"
 
 func TestNewRouter(t *testing.T) {
-    // ... ваш тест для NewRouter
+	// Ваши тесты для NewRouter
 }
 
 func TestStartServer(t *testing.T) {
-    // ... ваш тест для StartServer
+	// Ваши тесты для StartServer
 }
