@@ -6,30 +6,18 @@ import (
 	"net/http"
 )
 
-// Server represents the HTTP server.
-type Server struct {
-	port   int
-	router *httprouter.Router
-}
+// NewServer создает новый HTTP-сервер с обработчиками маршрутов.
+func NewServer() *http.Server {
+	router := httprouter.New()
+	router.POST("/calculate", CalculateHandler)
 
-// NewServer creates a new instance of Server.
-func NewServer(port int) *Server {
-	server := &Server{
-		port:   port,
-		router: httprouter.New(),
+	port := 8989
+	addr := fmt.Sprintf(":%d", port)
+
+	server := &http.Server{
+		Addr:    addr,
+		Handler: router,
 	}
 
-	server.setupRoutes()
 	return server
-}
-
-// Start starts the HTTP server.
-func (s *Server) Start() {
-	addr := fmt.Sprintf(":%d", s.port)
-	http.ListenAndServe(addr, s.router)
-}
-
-func (s *Server) setupRoutes() {
-	h := NewHandler()
-	s.router.POST("/calculate", h.CalculateHandler)
 }
