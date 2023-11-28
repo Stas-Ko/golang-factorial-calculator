@@ -1,8 +1,10 @@
+// pkg/calculate/service_test.go
 package calculate
 
-import "testing"
+import (
+	"testing"
+)
 
-func TestCalculateFactorial(t *testing.T) {
-	// Ваши тесты для CalculateFactorial
+func TestCalculator_CalculateFactorial(t *testing.T) {
+	// ... ваші тести для сервісу
 }
-
