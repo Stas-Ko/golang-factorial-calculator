@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/your-username/golang-factorial-calculator/pkg/http"
+	"github.com/Stas-Ko/golang-factorial-calculator/blob/main/pkg/http"
 )
 
 func main() {
