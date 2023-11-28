@@ -1,16 +1,22 @@
-// pkg/http/middleware.go
 package http
 
 import (
 	"net/http"
-	"encoding/json"
+	"sync"
+
 	"github.com/julienschmidt/httprouter"
-	"github.com/Stas-Ko/golang-factorial-calculator/pkg/calculate"
 )
 
-// Middleware перевіряє, чи a і b є невід'ємними цілими числами в JSON-запиті.
-func Middleware(next httprouter.Handle, calculator *calculate.Calculator) httprouter.Handle {
-	return func(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
-		// ... ваш код middleware
-	}
+// Middleware перевіряє, чи a і b є не від'ємними цілими числами в JSON-запиті.
+func Middleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		decoder := json.NewDecoder(r.Body)
+		var inputData InputData
+		err := decoder.Decode(&inputData)
+		if err != nil || inputData.A < 0 || inputData.B < 0 {
+			http.Error(w, "Incorrect input", http.StatusBadRequest)
+			return
+		}
+		next.ServeHTTP(w, r)
+	})
 }
