@@ -1,18 +1,25 @@
 // pkg/calculate/service.go
 package calculate
 
-// Calculator определяет интерфейс для вычисления факториала.
-type Calculator interface {
-	CalculateFactorial(n int) int
+import "sync"
+
+// Calculator представляє собою сервіс для обчислення факторіала.
+type Calculator struct {
+	mu sync.Mutex
 }
 
-// FactorialService реализует вычисление факториала.
-type FactorialService struct{}
+// NewCalculator створює новий екземпляр Calculator.
+func NewCalculator() *Calculator {
+	return &Calculator{}
+}
 
-// CalculateFactorial вычисляет факториал числа n.
-func (s *FactorialService) CalculateFactorial(n int) int {
+// CalculateFactorial обчислює факторіал числа n.
+func (c *Calculator) CalculateFactorial(n int) int {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+
 	if n == 0 || n == 1 {
 		return 1
 	}
-	return n * s.CalculateFactorial(n-1)
+	return n * c.CalculateFactorial(n-1)
 }
