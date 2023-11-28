@@ -1,11 +1,18 @@
 package http
 
 import (
+	"encoding/json" // Добавлено
 	"net/http"
 	"sync"
 
 	"github.com/julienschmidt/httprouter"
 )
+
+// InputData добавлено
+type InputData struct {
+	A int `json:"a"`
+	B int `json:"b"`
+}
 
 // Middleware перевіряє, чи a і b є не від'ємними цілими числами в JSON-запиті.
 func Middleware(next http.Handler) http.Handler {
