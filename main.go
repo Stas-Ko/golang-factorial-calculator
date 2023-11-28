@@ -1,19 +1,13 @@
-// main.go
 package main
 
 import (
 	"fmt"
-	"github.com/julienschmidt/httprouter"
-	"github.com/Stas-Ko/golang-factorial-calculator/pkg/http"
-	"github.com/Stas-Ko/golang-factorial-calculator/pkg/calculate"
+	"github.com/your-username/golang-factorial-calculator/pkg/http"
 )
 
 func main() {
-	calculator := calculate.NewCalculator()
-	router := http.NewRouter(calculator)
-	router.POST("/calculate", http.Middleware(http.CalculateHandler(calculator)))
-
+	server := http.NewServer(8989)
 	fmt.Println("Server is running on port 8989...")
-	http.StartServer(router)
+	server.Start()
 }
 
