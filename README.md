@@ -35,5 +35,15 @@ If you input negative values, the server will respond with:
 Feel free to explore and test the application using different inputs.
 
 
+## Building from Source
+
+If you want to build the application from source, follow these steps:
+
+1. Ensure you have Go installed on your machine.
+
+2. Clone the repository to your local machine:
+   ```bash
+   git clone https://github.com/Stas-Ko/golang-factorial-calculator.git
+
 
    
