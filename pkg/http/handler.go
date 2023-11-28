@@ -2,7 +2,6 @@
 package http
 
 import (
-	"encoding/json"
 	"net/http"
 	"github.com/julienschmidt/httprouter"
 	"github.com/Stas-Ko/golang-factorial-calculator/pkg/calculate"
@@ -22,4 +21,3 @@ func CalculateHandler(calculator *calculate.Calculator) httprouter.Handle {
 		// ... ваш код для обробки запиту
 	}
 }
-
