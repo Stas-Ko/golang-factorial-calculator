@@ -2,14 +2,23 @@ package main
 
 import (
 	"fmt"
-	"github.com/Stas-Ko/golang-factorial-calculator/pkg/http"
+	"net/http"
+
+	"github.com/Stas-Ko/golang-factorial-calculator/pkg/server"
 )
 
 func main() {
-	server := http.NewServer()
+	router := server.NewRouter()
+	router.AddRoutes()
 
-	fmt.Println("Server is running on port 8989...")
-	err := server.ListenAndServe()
+	addr := ":8989"
+	httpServer := &http.Server{
+		Addr:    addr,
+		Handler: router,
+	}
+
+	fmt.Printf("Server is running on %s...\n", addr)
+	err := httpServer.ListenAndServe()
 	if err != nil {
 		fmt.Printf("Error starting server: %s\n", err)
 	}
