@@ -1,28 +1,26 @@
-package server
+// pkg/http/server.go
+
+package http
 
 import (
-	"github.com/julienschmidt/httprouter"
+	"fmt"
 	"net/http"
+
+	"github.com/julienschmidt/httprouter"
+	"github.com/your-username/golang-factorial-calculator/pkg/calculate"
 )
 
-type Router struct {
-	*httprouter.Router
-}
+// NewServer создает новый HTTP-сервер с обработчиками маршрутов.
+func NewServer() *http.Server {
+	router := NewRouter()
+	port := 8989
+	addr := fmt.Sprintf(":%d", port)
 
-func NewRouter() *Router {
-	router := httprouter.New()
-
-	return &Router{
-		Router: router,
+	server := &http.Server{
+		Addr:    addr,
+		Handler: router,
 	}
+
+	return server
 }
 
-func (r *Router) AddRoutes() {
-	calculateHandler := NewCalculateHandler(calculator.NewFactorialCalculator())
-
-	r.POST("/calculate", calculateHandler.ServeHTTP)
-}
-
-func (r *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
-	r.Router.ServeHTTP(w, req)
-}
