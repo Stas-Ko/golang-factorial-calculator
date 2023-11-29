@@ -1,23 +1,28 @@
-package http
+package server
 
 import (
-	"fmt"
 	"github.com/julienschmidt/httprouter"
 	"net/http"
 )
 
-// NewServer создает новый HTTP-сервер с обработчиками маршрутов.
-func NewServer() *http.Server {
+type Router struct {
+	*httprouter.Router
+}
+
+func NewRouter() *Router {
 	router := httprouter.New()
-	router.POST("/calculate", CalculateHandler)
 
-	port := 8989
-	addr := fmt.Sprintf(":%d", port)
-
-	server := &http.Server{
-		Addr:    addr,
-		Handler: router,
+	return &Router{
+		Router: router,
 	}
+}
 
-	return server
+func (r *Router) AddRoutes() {
+	calculateHandler := NewCalculateHandler(calculator.NewFactorialCalculator())
+
+	r.POST("/calculate", calculateHandler.ServeHTTP)
+}
+
+func (r *Router) ServeHTTP(w http.ResponseWriter, req *http.Request) {
+	r.Router.ServeHTTP(w, req)
 }
