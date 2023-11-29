@@ -1,4 +1,4 @@
-// pkg/http/server.go
+// server.go
 
 package http
 
@@ -23,4 +23,3 @@ func NewServer() *http.Server {
 
 	return server
 }
-
