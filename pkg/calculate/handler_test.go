@@ -39,7 +39,10 @@ func TestCalculateHandler(t *testing.T) {
 			assert.NoError(t, err)
 
 			rr := httptest.NewRecorder()
-			handler := http.HandlerFunc(CalculateHandler)
+			handler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+    CalculateHandler(w, r, nil)
+})
+
 
 			handler.ServeHTTP(rr, req)
 
