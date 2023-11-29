@@ -29,6 +29,21 @@ go.sum
 main.go
 
 
+## File Descriptions
+
+- **pkg/calculate/handler.go**: Defines the logic for handling calculations.
+
+- **pkg/calculate/handler_test.go**: Contains tests for the functionality implemented in `handler.go`.
+
+- **pkg/http/router.go**: Implements the routing logic for the HTTP server.
+
+- **pkg/http/router_test.go**: Contains tests for the routing logic implemented in `router.go`.
+
+- **pkg/http/server.go**: Defines the HTTP server and its behavior.
+
+- **main.go**: Serves as the main application file, likely containing the entry point for the program.
+
+
 ## Running the Server
 
 1. Open the command prompt (cmd) in the project directory.
