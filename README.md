@@ -16,17 +16,29 @@ This repository contains a simple Golang application for calculating factorials 
 ## Project Structure
 
 pkg
-|-- calculate
-|   |-- handler.go
-|   |-- handler_test.go
-|-- http
-|   |-- router.go
-|   |-- router_test.go
-|   |-- server.go
+
+    |-- calculate
+
+      |   |-- handler.go
+
+      |   |-- handler_test.go
+
+    |-- http
+
+      |   |-- router.go
+
+      |   |-- router_test.go
+
+      |   |-- server.go
+
 README.md
+
 go.mod
+
 go.sum
+
 main.go
+
 
 
 ## File Descriptions
