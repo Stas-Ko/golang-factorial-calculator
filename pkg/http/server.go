@@ -7,7 +7,7 @@ import (
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
-	"github.com/your-username/golang-factorial-calculator/pkg/calculate"
+	"github.com/Stas-Ko/golang-factorial-calculator/pkg/calculate"
 )
 
 // NewServer создает новый HTTP-сервер с обработчиками маршрутов.
