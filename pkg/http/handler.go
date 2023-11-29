@@ -1,37 +1,28 @@
-package http
+package server
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
-	"sync"
-
-	"github.com/julienschmidt/httprouter"
+	"strconv"
 )
 
-type InputData struct {
-	A int `json:"a"`
-	B int `json:"b"`
+type CalculateHandler struct {
+	FactorialCalculator *calculator.FactorialCalculator
 }
 
-type Result struct {
-	AFactorial      string `json:"a_factorial"`
-	BFactorial      string `json:"b_factorial"`
-	AFactorialValue int    `json:"a_factorial_value"`
-	BFactorialValue int    `json:"b_factorial_value"`
-}
-
-func calculateFactorial(n int) int {
-	if n == 0 || n == 1 {
-		return 1
+func NewCalculateHandler(factorialCalculator *calculator.FactorialCalculator) *CalculateHandler {
+	return &CalculateHandler{
+		FactorialCalculator: factorialCalculator,
 	}
-	return n * calculateFactorial(n-1)
 }
 
-func CalculateHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	decoder := json.NewDecoder(r.Body)
-	var inputData InputData
-	err := decoder.Decode(&inputData)
+func (h *CalculateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	var inputData struct {
+		A int `json:"a"`
+		B int `json:"b"`
+	}
+
+	err := json.NewDecoder(r.Body).Decode(&inputData)
 	if err != nil {
 		http.Error(w, "Incorrect input", http.StatusBadRequest)
 		return
@@ -42,26 +33,17 @@ func CalculateHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Param
 		return
 	}
 
-	var wg sync.WaitGroup
-	wg.Add(2)
+	aFactorial := h.FactorialCalculator.Calculate(inputData.A)
+	bFactorial := h.FactorialCalculator.Calculate(inputData.B)
 
-	var aFactorial, bFactorial int
-
-	go func() {
-		defer wg.Done()
-		aFactorial = calculateFactorial(inputData.A)
-	}()
-
-	go func() {
-		defer wg.Done()
-		bFactorial = calculateFactorial(inputData.B)
-	}()
-
-	wg.Wait()
-
-	result := Result{
-		AFactorial:      fmt.Sprintf("%d!", inputData.A),
-		BFactorial:      fmt.Sprintf("%d!", inputData.B),
+	result := struct {
+		AFactorial      string `json:"a_factorial"`
+		BFactorial      string `json:"b_factorial"`
+		AFactorialValue int    `json:"a_factorial_value"`
+		BFactorialValue int    `json:"b_factorial_value"`
+	}{
+		AFactorial:      strconv.Itoa(inputData.A) + "!",
+		BFactorial:      strconv.Itoa(inputData.B) + "!",
 		AFactorialValue: aFactorial,
 		BFactorialValue: bFactorial,
 	}
