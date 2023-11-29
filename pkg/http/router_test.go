@@ -1,10 +1,9 @@
-// pkg/http/router_test.go
-
 package http
 
 import (
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -30,7 +29,8 @@ func TestNewRouter(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			req, err := http.NewRequest(tc.method, tc.path, nil)
+			var jsonStr = []byte(`{"a": 3, "b": 5}`)  // Updated test data
+			req, err := http.NewRequest(tc.method, tc.path, strings.NewReader(string(jsonStr)))
 			assert.NoError(t, err)
 
 			rr := httptest.NewRecorder()
